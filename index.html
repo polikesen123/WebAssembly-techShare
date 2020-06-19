@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>AssemblyScript isPrime demo</title>
+</head>
+<script src="./js/index.js"></script>
+
+<body>
+    <h4>
+        第<input type="number" onchange="compuWA(event)" placeholder="1-45">项斐波那契数列
+    </h4>
+    <h4>
+        第<input type="number" onchange="compuWA2(event)" placeholder="1-10000">个素数
+    </h4>
+    <div>
+        <h4>
+            使用WebAssembly
+        </h4>
+        <div id="comgetfibwa">
+
+        </div>
+    </div>
+    <div>
+        <h4>
+            不用WebAssembly
+        </h4>
+        <div id="comgetfib">
+
+        </div>
+    </div>
+
+</body>
+<script>
+    (async () => {
+        const importObject = {
+            env: {
+                abort(_msg, _file, line, column) {
+                    console.error("abort called at index.ts:" + line + ":" + column);
+                }
+            }
+        };
+        console.log(WebAssembly)
+        const module = await WebAssembly.instantiateStreaming(
+            fetch("./build/optimized.wasm"),
+            importObject
+        );
+
+        getFibWA = module.instance.exports.getFib;
+        getPrimeWA = module.instance.exports.getPrime;
+    })();
+
+    async function comGetFibWA(index) {
+        comgetfibwa.innerText = `第${index}项斐波那契数列...`;
+        return new Promise((res, rej) => {
+            setTimeout(() => {
+                let start = new Date();
+                let num = getFibWA(index);
+                comgetfibwa.innerText = `第${index}项斐波那契数列:${num};耗时:${new Date()-start}ms`;
+                res();
+            },100);
+        });
+    }
+
+    async function comGetFib(index) {
+        comgetfib.innerText = `第${index}项斐波那契数列...`;
+        return new Promise((res, rej) => {
+            setTimeout(() => {
+                let start = new Date();
+                let num = getFib(index);
+                comgetfib.innerText = `第${index}项斐波那契数列:${num};耗时:${new Date()-start}ms`;
+                res();
+            },100);
+        });
+    }
+
+    async function comGetPrimeWA(index) {
+        comgetfibwa.innerText = `第${index}个素数...`;
+        return new Promise((res, rej) => {
+            setTimeout(() => {
+                let start = new Date();
+                let num = getPrimeWA(index);
+                comgetfibwa.innerText = `第${index}个素数:${num};耗时:${new Date()-start}ms`;
+                res();
+            },100);
+        });
+    }
+
+    async function comGetPrime(index) {
+        comgetfib.innerText = `第${index}个素数...`;
+        return new Promise((res, rej) => {
+            setTimeout(() => {
+                let start = new Date();
+                let num = getPrime(index);
+                comgetfib.innerText = `第${index}个素数:${num};耗时:${new Date()-start}ms`;
+                res();
+            },100);
+        });
+    }
+
+
+    async function compuWA(event) {
+        let num = event.target.value * 1;
+        await comGetFibWA(num);
+        await comGetFib(num);
+    }
+
+    async function compuWA2(event) {
+        let num = event.target.value * 1;
+        await comGetPrimeWA(num);
+        await comGetPrime(num);
+    }
+</script>
+
+</html>

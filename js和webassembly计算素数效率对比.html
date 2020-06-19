@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+option = {
+    title: {
+        text: 'js和webassembly计算素数效率对比'
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data: ['js', 'webassembly']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: [250,500,750,1000,1250,1500,1750,2000,2250,2500,2750,3000,3250,3500,3750,4000,4250,4500,4750,5000,5250,5500,5750,6000,6250,6500,6750,7000,7250,7500,7750,8000,8250,8500,8750,9000,9250,9500,9750,10000,10250,10500,10750,11000,11250,11500,11750,12000,12250,12500,12750,13000,13250,13500,13750,14000,14250,14500,14750,15000,15250,15500,15750,16000,16250,16500,16750,17000,17250,17500,17750,18000,18250,18500,18750,19000,19250,19500,19750,20000]
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+        {
+            name: 'js',
+            type: 'line',
+            stack: 'js',
+            data: [30,62,98,137,173,215,256,306,356,403,461,516,572,640,706,744,826,907,965,1057,1121,1191,1269,1354,1453,1540,1618,1713,1827,1892,1981,2095,2200,2309,2420,2532,2606,2713,2873,2944,3109,3236,3319,3486,3647,3723,3899,3987,4165,4261,4442,4580,4739,4861,5024,5193,5338,5486,5681,5810,6007,6201,6364,6493,6674,6890,7081,7238,7399,7556,7866,7968,8126,8362,8570,8775,8997,9201,9435,9569]
+        },
+        {
+            name: 'webassembly',
+            type: 'line',
+            stack: 'webassembly',
+            data: [2,5,8,13,20,26,36,45,53,67,81,95,110,126,143,163,185,202,230,254,287,314,342,376,404,437,477,512,555,592,632,669,711,770,823,859,910,963,1024,1077,1124,1201,1244,1308,1368,1446,1505,1565,1631,1723,1790,1844,1934,1997,2084,2160,2252,2351,2409,2485,2598,2689,2770,2876,2958,3047,3160,3304,3340,3485,3560,3700,3775,3875,4007,4096,4262,4311,4428,4567]
+        }
+    ]
+};
+
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>
